@@ -5,70 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Configuration Form</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .container {
-            width: 80%;
-            margin: auto;
-        }
-        .form-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        header img {
-            max-width: 100px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-
-        h2 {
-            margin-top: 30px;
-        }
-
-        .section-header {
-            margin-top: 30px;
-        }
-
-        .section-container {
-            margin-bottom: 30px;
-        }
-
-        .section-header, .section-container {
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="header-center">
-                <img src="logo.png" alt="WPS Logo" class="logo">
+            <div class="info-box">
+                In te vullen door de klant
+            </div>
+            <img src="logo.png" alt="WPS Logo" class="logo">
+            <div class="info-box">
+                In te vullen door WPS
             </div>
         </header>
 
@@ -197,6 +143,9 @@
             sectionsContainer.innerHTML = '';  // Clear previous sections
 
             for (let i = 1; i <= numSections; i++) {
+                const sectionDiv = document.createElement('div');
+                sectionDiv.classList.add('section-container');
+                
                 const table = document.createElement('table');
                 const headerRow = document.createElement('tr');
                 headerRow.innerHTML = `
@@ -236,7 +185,8 @@
                 `;
                 table.appendChild(row);
 
-                sectionsContainer.appendChild(table);
+                sectionDiv.appendChild(table);
+                sectionsContainer.appendChild(sectionDiv);
             }
 
             calculateSums();
@@ -321,71 +271,6 @@
                 return;
             }
 
-            const createTableForStation = (sectionIndex, stationType, count) => {
-                const table = document.createElement('table');
-                const headerRow = document.createElement('tr');
-                headerRow.innerHTML = `
-                    <th>${stationType}</th>
-                    <th>Name</th>
-                    <th>Section</th>
-                    <th>ANPR</th>
-                    <th>Audio support</th>
-                    <th>Ticketprinter</th>
-                    <th>Credit card in</th>
-                    <th>Bancontact / CC</th>
-                    <th>Cash</th>
-                `;
-                table.appendChild(headerRow);
-
-                for (let i = 1; i <= count; i++) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${stationType} ${i}</td>
-                        <td><input type="text" name="section${sectionIndex}${stationType}${i}Name" required></td>
-                        <td><input type="text" name="section${sectionIndex}${stationType}${i}Section" value="carpark${sectionIndex}" required></td>
-                        <td>
-                            <select name="section${sectionIndex}${stationType}${i}ANPR">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}${stationType}${i}AudioSupport">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}${stationType}${i}TicketPrinter">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}${stationType}${i}CreditCardIn">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}${stationType}${i}BancontactCC">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}${stationType}${i}Cash">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                    `;
-                    table.appendChild(row);
-                }
-
-                return table;
-            };
-
             const stationTypes = [
                 { type: 'Entry', count: totalEntry },
                 { type: 'Exit', count: totalExit },
@@ -410,6 +295,71 @@
             }
 
             generateIPSettings();
+        }
+
+        function createTableForStation(sectionIndex, stationType, count) {
+            const table = document.createElement('table');
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = `
+                <th>${stationType}</th>
+                <th>Name</th>
+                <th>Section</th>
+                <th>ANPR</th>
+                <th>Audio support</th>
+                <th>Ticketprinter</th>
+                <th>Credit card in</th>
+                <th>Bancontact / CC</th>
+                <th>Cash</th>
+            `;
+            table.appendChild(headerRow);
+
+            for (let i = 1; i <= count; i++) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${stationType} ${i}</td>
+                    <td><input type="text" name="section${sectionIndex}${stationType}${i}Name" required></td>
+                    <td><input type="text" name="section${sectionIndex}${stationType}${i}Section" value="carpark${sectionIndex}" required></td>
+                    <td>
+                        <select name="section${sectionIndex}${stationType}${i}ANPR">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="section${sectionIndex}${stationType}${i}AudioSupport">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="section${sectionIndex}${stationType}${i}TicketPrinter">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="section${sectionIndex}${stationType}${i}CreditCardIn">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="section${sectionIndex}${stationType}${i}BancontactCC">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select name="section${sectionIndex}${stationType}${i}Cash">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                `;
+                table.appendChild(row);
+            }
+
+            return table;
         }
 
         function generateIPSettings() {
