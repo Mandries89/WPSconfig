@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Configuration Form - Step 2</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <div class="info-box">In te vullen door de klant</div>
+                <div class="info-box">In te vullen door WPS</div>
+            </div>
+            <div class="header-center">
+                <img src="logo.png" alt="WPS Logo" class="logo">
+            </div>
+            <div class="header-right"></div>
+        </header>
+
+        <form name="configFormStep2" method="POST" data-netlify="true">
+            <input type="hidden" name="form-name" value="configFormStep2">
+            
+            <!-- Hidden inputs to retain data from step 1 -->
+            <input type="hidden" name="projectName" value="">
+            <input type="hidden" name="address" value="">
+            <input type="hidden" name="street" value="">
+            <input type="hidden" name="postalCode" value="">
+            <input type="hidden" name="city" value="">
+            <input type="hidden" name="country" value="">
+            <input type="hidden" name="customerProjectLeader" value="">
+            <input type="hidden" name="email" value="">
+            <input type="hidden" name="phone" value="">
+            <input type="hidden" name="wpsProjectLeader" value="">
+            <input type="hidden" name="wpsSalesManager" value="">
+            <input type="hidden" name="installationDate" value="">
+            
+            <!-- Parking Sections Information -->
+            <h2>Parking Sections</h2>
+            <table>
+                <tr>
+                    <th>Parking Sections</th>
+                    <th>Name</th>
+                    <th>Spaces</th>
+                    <th>Entry</th>
+                    <th>Exit</th>
+                    <th>C-display</th>
+                    <th>Remark</th>
+                </tr>
+                <!-- Repeat this block for each section -->
+                <tr>
+                    <td>Section 1</td>
+                    <td><input type="text" name="section1Name" value="naam van de sectie (default is &quot;carpark&quot;)" required></td>
+                    <td><input type="number" name="section1Spaces" value="200" required></td>
+                    <td><input type="number" name="section1Entry" value="1" required></td>
+                    <td><input type="number" name="section1Exit" value="2" required></td>
+                    <td>
+                        <select name="section1Cdisplay">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="section1Remark"></td>
+                </tr>
+                <!-- Repeat above block for each additional section -->
+                <tr>
+                    <td>Section 2</td>
+                    <td><input type="text" name="section2Name" value="in te vullen indien meerdere secties"></td>
+                    <td><input type="number" name="section2Spaces"></td>
+                    <td><input type="number" name="section2Entry"></td>
+                    <td><input type="number" name="section2Exit"></td>
+                    <td>
+                        <select name="section2Cdisplay">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="section2Remark"></td>
+                </tr>
+                <!-- Add more sections as needed -->
+            </table>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        // Populate hidden inputs with data from sessionStorage
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('input[type="hidden"]').forEach(input => {
+                input.value = sessionStorage.getItem(input.name);
+            });
+        });
+    </script>
+</body>
+</html>
