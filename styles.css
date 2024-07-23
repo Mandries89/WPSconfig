@@ -93,7 +93,7 @@ input[type="submit"] {
 
 button:hover,
 input[type="submit"]:hover {
-    background-color: darkgreen;
+    background-color: lightgreen;
 }
 
 table {
