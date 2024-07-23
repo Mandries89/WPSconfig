@@ -10,8 +10,8 @@
     <div class="container">
         <header>
             <div class="header-left">
-                <div class="info-box">De parking zal steeds werken met 2 secties, 1 binnen en 1 buiten</div>
-                <div class="info-box">In te vullen door klant</div>
+                <div class="info-box">In te vullen door de klant</div>
+                <div class="info-box">In te vullen door WPS</div>
             </div>
             <div class="header-center">
                 <img src="logo.png" alt="WPS Logo" class="logo">
@@ -53,12 +53,22 @@
                     <th>Total</th>
                     <th>Entry</th>
                     <th>Exit</th>
+                    <th>POF</th>
+                    <th>DOOR</th>
+                    <th>GATE</th>
+                    <th>Cashless</th>
+                    <th>SCANNER</th>
                     <th>Counters</th>
                 </tr>
                 <tr>
                     <td id="totalSpaces">0</td>
                     <td id="totalEntry">0</td>
                     <td id="totalExit">0</td>
+                    <td id="totalPOF">0</td>
+                    <td id="totalDOOR">0</td>
+                    <td id="totalGATE">0</td>
+                    <td id="totalCashless">0</td>
+                    <td id="totalSCANNER">0</td>
                     <td id="totalCounters">0</td>
                 </tr>
             </table>
@@ -67,7 +77,6 @@
         </form>
         <button class="back-button" onclick="goBack()">Back</button>
     </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             document.querySelectorAll('input[type="hidden"]').forEach(input => {
@@ -88,6 +97,11 @@
                 <th>Spaces</th>
                 <th>Entry</th>
                 <th>Exit</th>
+                <th>POF</th>
+                <th>DOOR</th>
+                <th>GATE</th>
+                <th>Cashless</th>
+                <th>SCANNER</th>
                 <th>C-display</th>
                 <th>Remark</th>
             `;
@@ -101,6 +115,11 @@
                     <td><input type="number" name="section${i}Spaces" required oninput="calculateSums()"></td>
                     <td><input type="number" name="section${i}Entry" required oninput="calculateSums()"></td>
                     <td><input type="number" name="section${i}Exit" required oninput="calculateSums()"></td>
+                    <td><input type="number" name="section${i}POF" required oninput="calculateSums()"></td>
+                    <td><input type="number" name="section${i}DOOR" required oninput="calculateSums()"></td>
+                    <td><input type="number" name="section${i}GATE" required oninput="calculateSums()"></td>
+                    <td><input type="number" name="section${i}Cashless" required oninput="calculateSums()"></td>
+                    <td><input type="number" name="section${i}SCANNER" required oninput="calculateSums()"></td>
                     <td>
                         <select name="section${i}Cdisplay" onchange="calculateSums()">
                             <option value="Yes">Yes</option>
@@ -121,17 +140,32 @@
             let totalSpaces = 0;
             let totalEntry = 0;
             let totalExit = 0;
+            let totalPOF = 0;
+            let totalDOOR = 0;
+            let totalGATE = 0;
+            let totalCashless = 0;
+            let totalSCANNER = 0;
             let totalCounters = 0;
 
             for (let i = 1; i <= numSections; i++) {
                 const spaces = parseInt(document.querySelector(`input[name="section${i}Spaces"]`)?.value || 0);
                 const entry = parseInt(document.querySelector(`input[name="section${i}Entry"]`)?.value || 0);
                 const exit = parseInt(document.querySelector(`input[name="section${i}Exit"]`)?.value || 0);
+                const pof = parseInt(document.querySelector(`input[name="section${i}POF"]`)?.value || 0);
+                const door = parseInt(document.querySelector(`input[name="section${i}DOOR"]`)?.value || 0);
+                const gate = parseInt(document.querySelector(`input[name="section${i}GATE"]`)?.value || 0);
+                const cashless = parseInt(document.querySelector(`input[name="section${i}Cashless"]`)?.value || 0);
+                const scanner = parseInt(document.querySelector(`input[name="section${i}SCANNER"]`)?.value || 0);
                 const cdisplay = document.querySelector(`select[name="section${i}Cdisplay"]`)?.value || 'No';
 
                 totalSpaces += spaces;
                 totalEntry += entry;
                 totalExit += exit;
+                totalPOF += pof;
+                totalDOOR += door;
+                totalGATE += gate;
+                totalCashless += cashless;
+                totalSCANNER += scanner;
                 if (cdisplay === 'Yes') {
                     totalCounters++;
                 }
@@ -140,12 +174,22 @@
             document.getElementById('totalSpaces').innerText = totalSpaces;
             document.getElementById('totalEntry').innerText = totalEntry;
             document.getElementById('totalExit').innerText = totalExit;
+            document.getElementById('totalPOF').innerText = totalPOF;
+            document.getElementById('totalDOOR').innerText = totalDOOR;
+            document.getElementById('totalGATE').innerText = totalGATE;
+            document.getElementById('totalCashless').innerText = totalCashless;
+            document.getElementById('totalSCANNER').innerText = totalSCANNER;
             document.getElementById('totalCounters').innerText = totalCounters;
 
-            // Save sums to sessionStorage for use on page 4
+            // Save sums to sessionStorage for use on page 3
             sessionStorage.setItem('totalSpaces', totalSpaces);
             sessionStorage.setItem('totalEntry', totalEntry);
             sessionStorage.setItem('totalExit', totalExit);
+            sessionStorage.setItem('totalPOF', totalPOF);
+            sessionStorage.setItem('totalDOOR', totalDOOR);
+            sessionStorage.setItem('totalGATE', totalGATE);
+            sessionStorage.setItem('totalCashless', totalCashless);
+            sessionStorage.setItem('totalSCANNER', totalSCANNER);
             sessionStorage.setItem('totalCounters', totalCounters);
         }
 
