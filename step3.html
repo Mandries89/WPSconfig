@@ -25,12 +25,22 @@
                 <th>Total</th>
                 <th>Entry</th>
                 <th>Exit</th>
+                <th>POF</th>
+                <th>DOOR</th>
+                <th>GATE</th>
+                <th>Cashless</th>
+                <th>SCANNER</th>
                 <th>Counters</th>
             </tr>
             <tr>
                 <td id="totalSpaces">0</td>
                 <td id="totalEntry">0</td>
                 <td id="totalExit">0</td>
+                <td id="totalPOF">0</td>
+                <td id="totalDOOR">0</td>
+                <td id="totalGATE">0</td>
+                <td id="totalCashless">0</td>
+                <td id="totalSCANNER">0</td>
                 <td id="totalCounters">0</td>
             </tr>
         </table>
@@ -55,6 +65,11 @@
             document.getElementById('totalSpaces').innerText = sessionStorage.getItem('totalSpaces');
             document.getElementById('totalEntry').innerText = sessionStorage.getItem('totalEntry');
             document.getElementById('totalExit').innerText = sessionStorage.getItem('totalExit');
+            document.getElementById('totalPOF').innerText = sessionStorage.getItem('totalPOF');
+            document.getElementById('totalDOOR').innerText = sessionStorage.getItem('totalDOOR');
+            document.getElementById('totalGATE').innerText = sessionStorage.getItem('totalGATE');
+            document.getElementById('totalCashless').innerText = sessionStorage.getItem('totalCashless');
+            document.getElementById('totalSCANNER').innerText = sessionStorage.getItem('totalSCANNER');
             document.getElementById('totalCounters').innerText = sessionStorage.getItem('totalCounters');
 
             generateStationsBySection();
