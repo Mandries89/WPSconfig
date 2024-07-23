@@ -6,6 +6,10 @@
     <title>Project Configuration Form</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        .container {
+            width: 80%;
+            margin: auto;
+        }
         .form-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -50,12 +54,23 @@
         .section-header {
             margin-top: 30px;
         }
+
+        .section-container {
+            margin-bottom: 30px;
+        }
+
+        .section-header, .section-container {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            
+            <div class="header-left">
+                <div class="info-box">In te vullen door de klant</div>
+                <div class="info-box">In te vullen door WPS</div>
+            </div>
             <div class="header-center">
                 <img src="logo.png" alt="WPS Logo" class="logo">
             </div>
@@ -126,7 +141,7 @@
             </div>
 
             <!-- Placeholder for sections -->
-            <div id="sectionsContainer"></div>
+            <div id="sectionsContainer" class="section-container"></div>
 
             <!-- Summary -->
             <h2 class="section-header">Summary</h2>
@@ -157,8 +172,8 @@
                 </table>
             </div>
 
-            <div id="stationsContainer"></div>
-            <div id="ipSettingsContainer"></div>
+            <div id="stationsContainer" class="section-container"></div>
+            <div id="ipSettingsContainer" class="section-container"></div>
 
             <input type="submit" value="Submit">
         </form>
@@ -220,8 +235,7 @@
                     <td>
                         <select name="section${i}Cdisplay" onchange="calculateSums()">
                             <option value="Yes">Yes</option>
-                            <option value="No" selected>No</option>
-                        </select>
+                            <option value="No" selected>No</select>
                     </td>
                     <td><input type="text" name="section${i}Remark"></td>
                 `;
