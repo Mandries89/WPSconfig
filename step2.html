@@ -95,6 +95,12 @@
             document.querySelectorAll('input[type="hidden"]').forEach(input => {
                 input.value = sessionStorage.getItem(input.name);
             });
+
+            // Set the project name from session storage
+            const projectName = sessionStorage.getItem('projectName');
+            if (projectName) {
+                document.querySelector('input[name="projectName"]').value = projectName;
+            }
         });
 
         function generateSections() {
@@ -206,15 +212,29 @@
             sessionStorage.setItem('totalCounters', totalCounters);
         }
 
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault();
             // Process and submit the form data
             const formData = new FormData(event.target);
             for (let [key, value] of formData.entries()) {
                 sessionStorage.setItem(key, value);
             }
-            // Redirect to the next page
-            window.location.href = "step3.html";
+
+            // Send the form data using Fetch API
+            const response = await fetch(event.target.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(formData).toString(),
+            });
+
+            if (response.ok) {
+                // Redirect to the next page
+                window.location.href = "step3.html";
+            } else {
+                alert('Failed to submit the form');
+            }
         }
 
         function goBack() {
