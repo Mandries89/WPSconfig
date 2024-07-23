@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    if (sessionStorage.getItem('totalSpaces')) {
+    if (sessionStorage.getItem('numSections')) {
+        document.getElementById('numSections').value = sessionStorage.getItem('numSections');
         document.getElementById('totalSpaces').innerText = sessionStorage.getItem('totalSpaces');
         document.getElementById('totalEntry').innerText = sessionStorage.getItem('totalEntry');
         document.getElementById('totalExit').innerText = sessionStorage.getItem('totalExit');

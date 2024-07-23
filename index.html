@@ -10,6 +10,7 @@
     <div class="container">
         <header>
             <div class="header-left">
+                
             </div>
             <div class="header-center">
                 <img src="logo.png" alt="WPS Logo" class="logo">
@@ -74,7 +75,7 @@
                 <div class="form-group">
                     <label for="numSections">Number of sections</label>
                     <input type="number" id="numSections" name="numSections" min="1" required>
-                    <button type="button" onclick="generateSections()">Generate Sections</button>
+                    <button type="button" class="generate-button" onclick="generateSections()">Generate Sections</button>
                 </div>
 
                 <div id="sectionsContainer"></div>
@@ -111,7 +112,7 @@
                 <h2>IP Settings per Station</h2>
                 <div id="ipSettingsContainer"></div>
 
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" class="submit-button">
             </div>
         </form>
         <button class="back-button" onclick="goBack()">Back</button>
