@@ -21,57 +21,57 @@
 
         <form name="configForm" method="POST" data-netlify="true">
             <input type="hidden" name="form-name" value="configForm">
+            
+            <!-- Project Information Section -->
             <div class="form-group">
                 <label for="projectName">Project name</label>
                 <input type="text" id="projectName" name="projectName" value='Parking "Naam parking"' required>
             </div>
 
-            <div class="form-group">
-                <label for="address">Address</label>
-                <input type="text" id="address" name="address">
-            </div>
-            <div class="form-group">
-                <label for="street">Street</label>
-                <input type="text" id="street" name="street">
-            </div>
-            <div class="form-group">
-                <label for="postalCode">Postal code</label>
-                <input type="text" id="postalCode" name="postalCode">
-            </div>
-            <div class="form-group">
-                <label for="city">City</label>
-                <input type="text" id="city" name="city">
-            </div>
-            <div class="form-group">
-                <label for="country">Country</label>
-                <input type="text" id="country" name="country">
-            </div>
-
-            <div class="form-group">
-                <label for="customerProjectLeader">Customer Project Leader</label>
-                <input type="text" id="customerProjectLeader" name="customerProjectLeader">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email">
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="text" id="phone" name="phone">
-            </div>
-
-            <div class="form-group">
-                <label for="wpsProjectLeader">WPS Project Leader</label>
-                <input type="text" id="wpsProjectLeader" name="wpsProjectLeader">
-            </div>
-            <div class="form-group">
-                <label for="wpsSalesManager">WPS Sales Manager</label>
-                <input type="text" id="wpsSalesManager" name="wpsSalesManager">
-            </div>
-            <div class="form-group">
-                <label for="installationDate">Expected installation date</label>
-                <input type="date" id="installationDate" name="installationDate">
-            </div>
+            <!-- Parking Sections Information -->
+            <h2>Parking Sections</h2>
+            <table>
+                <tr>
+                    <th>Parking Sections</th>
+                    <th>Name</th>
+                    <th>Spaces</th>
+                    <th>Entry</th>
+                    <th>Exit</th>
+                    <th>C-display</th>
+                    <th>Remark</th>
+                </tr>
+                <!-- Repeat this block for each section -->
+                <tr>
+                    <td>Section 1</td>
+                    <td><input type="text" name="section1Name" value="naam van de sectie (default is &quot;carpark&quot;)" required></td>
+                    <td><input type="number" name="section1Spaces" value="200" required></td>
+                    <td><input type="number" name="section1Entry" value="1" required></td>
+                    <td><input type="number" name="section1Exit" value="2" required></td>
+                    <td>
+                        <select name="section1Cdisplay">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="section1Remark"></td>
+                </tr>
+                <!-- Repeat above block for each additional section -->
+                <tr>
+                    <td>Section 2</td>
+                    <td><input type="text" name="section2Name" value="in te vullen indien meerdere secties"></td>
+                    <td><input type="number" name="section2Spaces"></td>
+                    <td><input type="number" name="section2Entry"></td>
+                    <td><input type="number" name="section2Exit"></td>
+                    <td>
+                        <select name="section2Cdisplay">
+                            <option value="Yes">Yes</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="section2Remark"></td>
+                </tr>
+                <!-- Add more sections as needed -->
+            </table>
 
             <input type="submit" value="Submit">
         </form>
