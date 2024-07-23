@@ -5,13 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Configuration Form - Step 2</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div class="header-left">
-                <div class="info-box">De parking zal steeds werken met 2 secties, 1 binnen en 1 buiten</div>
-                <div class="info-box">...</div>
+                <div class="info-box">In te vullen door de klant</div>
+                <div class="info-box">In te vullen door WPS</div>
             </div>
             <div class="header-center">
                 <img src="logo.png" alt="WPS Logo" class="logo">
@@ -35,16 +46,18 @@
             <input type="hidden" name="wpsProjectLeader" value="">
             <input type="hidden" name="wpsSalesManager" value="">
             <input type="hidden" name="installationDate" value="">
-            
-            <!-- Vraag naar aantal secties -->
-            <div class="form-group">
-                <label for="numSections">Number of sections</label>
-                <input type="number" id="numSections" name="numSections" min="1" required>
-                <button type="button" onclick="generateSections()">Generate Sections</button>
-            </div>
 
-            <!-- Placeholder voor secties -->
-            <div id="sectionsContainer"></div>
+            <div class="form-container">
+                <!-- Vraag naar aantal secties -->
+                <div class="form-group">
+                    <label for="numSections">Number of sections</label>
+                    <input type="number" id="numSections" name="numSections" min="1" required>
+                    <button type="button" onclick="generateSections()">Generate Sections</button>
+                </div>
+
+                <!-- Placeholder voor secties -->
+                <div id="sectionsContainer"></div>
+            </div>
 
             <!-- Sums -->
             <h2>Summary</h2>
