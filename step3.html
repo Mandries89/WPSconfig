@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Configuration Form - Step 3</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <div class="info-box">In te vullen door de klant</div>
+                <div class="info-box">In te vullen door WPS</div>
+            </div>
+            <div class="header-center">
+                <img src="logo.png" alt="WPS Logo" class="logo">
+            </div>
+            <div class="header-right"></div>
+        </header>
+
+        <h2>Summary from Step 2</h2>
+        <table id="summaryTable">
+            <tr>
+                <th>Total</th>
+                <th>Entry</th>
+                <th>Exit</th>
+                <th>Counters</th>
+            </tr>
+            <tr>
+                <td id="totalSpaces">0</td>
+                <td id="totalEntry">0</td>
+                <td id="totalExit">0</td>
+                <td id="totalCounters">0</td>
+            </tr>
+        </table>
+
+        <h2>Station Configuration</h2>
+        <div id="stationsContainer"></div>
+
+        <form id="step3Form" name="configFormStep3" method="POST" data-netlify="true" onsubmit="handleSubmit(event)">
+            <input type="hidden" name="form-name" value="configFormStep3">
+
+            <!-- Other form fields for Step 3 -->
+            <!-- Placeholder for additional fields -->
+
+            <input type="submit" value="Submit">
+        </form>
+        <button class="back-button" onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Retrieve and display totals from sessionStorage
+            document.getElementById('totalSpaces').innerText = sessionStorage.getItem('totalSpaces');
+            document.getElementById('totalEntry').innerText = sessionStorage.getItem('totalEntry');
+            document.getElementById('totalExit').innerText = sessionStorage.getItem('totalExit');
+            document.getElementById('totalCounters').innerText = sessionStorage.getItem('totalCounters');
+
+            generateStations();
+        });
+
+        function generateStations() {
+            const totalEntry = parseInt(sessionStorage.getItem('totalEntry'));
+            const totalExit = parseInt(sessionStorage.getItem('totalExit'));
+            const stationsContainer = document.getElementById('stationsContainer');
+            stationsContainer.innerHTML = '';  // Clear previous stations
+
+            const createTable = (type, count) => {
+                const table = document.createElement('table');
+                const headerRow = document.createElement('tr');
+                headerRow.innerHTML = `
+                    <th>Station</th>
+                    <th>Name</th>
+                    <th>Section</th>
+                    <th>ANPR</th>
+                    <th>Audio support</th>
+                    <th>Ticketprinter</th>
+                    <th>Credit card in</th>
+                    <th>Bancontact / CC</th>
+                    <th>Cash</th>
+                `;
+                table.appendChild(headerRow);
+
+                for (let i = 1; i <= count; i++) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${type} ${i}</td>
+                        <td><input type="text" name="${type.toLowerCase()}${i}Name" required></td>
+                        <td><input type="text" name="${type.toLowerCase()}${i}Section" value="carpark" required></td>
+                        <td>
+                            <select name="${type.toLowerCase()}${i}ANPR">
+                                <option value="Yes">Yes</option>
+                                <option value="No" selected>No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="${type.toLowerCase()}${i}AudioSupport">
+                                <option value="Yes">Yes</option>
+                                <option value="No" selected>No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="${type.toLowerCase()}${i}TicketPrinter">
+                                <option value="Yes">Yes</option>
+                                <option value="No" selected>No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="${type.toLowerCase()}${i}CreditCardIn">
+                                <option value="Yes">Yes</option>
+                                <option value="No" selected>No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="${type.toLowerCase()}${i}BancontactCC">
+                                <option value="Yes">Yes</option>
+                                <option value="No" selected>No</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="${type.toLowerCase()}${i}Cash">
+                                <option value="Yes">Yes</option>
+                                <option value="No" selected>No</option>
+                            </select>
+                        </td>
+                    `;
+                    table.appendChild(row);
+                }
+
+                return table;
+            };
+
+            if (totalEntry > 0) {
+                const entryTable = createTable('Entry', totalEntry);
+                stationsContainer.appendChild(entryTable);
+            }
+
+            if (totalExit > 0) {
+                const exitTable = createTable('Exit', totalExit);
+                stationsContainer.appendChild(exitTable);
+            }
+
+            // Additional tables (POF, Cashless, etc.) can be added similarly
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            // Process and submit the form data
+            const formData = new FormData(event.target);
+            for (let [key, value] of formData.entries()) {
+                sessionStorage.setItem(key, value);
+            }
+            event.target.submit();
+        }
+
+        function goBack() {
+            window.location.href = "step2.html";
+        }
+    </script>
+</body>
+</html>
