@@ -11,7 +11,7 @@
         <header>
             <div class="header-left">
                 <div class="info-box">In te vullen door de klant</div>
-                <div class="info-box">...</div>
+                <div class="info-box">....</div>
             </div>
             <div class="header-center">
                 <img src="logo.png" alt="WPS Logo" class="logo">
@@ -19,7 +19,7 @@
             <div class="header-right"></div>
         </header>
 
-        <form id="step1Form" onsubmit="goToStep2(event)">
+        <form id="step1Form" name="configFormStep1" method="POST" data-netlify="true" onsubmit="goToStep2(event)">
             <input type="hidden" name="form-name" value="configFormStep1">
             <div class="form-group">
                 <label for="projectName">Project name</label>
@@ -87,7 +87,7 @@
             }
 
             // Send the form data using Fetch API
-            const response = await fetch('/', {
+            const response = await fetch(event.target.action, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
