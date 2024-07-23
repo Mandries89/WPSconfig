@@ -49,6 +49,24 @@
             <input type="submit" value="Submit">
         </form>
         <button onclick="goBack()">Back</button>
+        
+        <!-- Total Overview -->
+        <div id="totalsContainer">
+            <table>
+                <tr>
+                    <th>Total</th>
+                    <th>Entry</th>
+                    <th>Exit</th>
+                    <th>Counters</th>
+                </tr>
+                <tr>
+                    <td id="totalSpaces">0</td>
+                    <td id="totalEntry">0</td>
+                    <td id="totalExit">0</td>
+                    <td id="totalCounters">0</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -81,11 +99,11 @@
                 row.innerHTML = `
                     <td>Section ${i}</td>
                     <td><input type="text" name="section${i}Name" value="in te vullen indien meerdere secties" required></td>
-                    <td><input type="number" name="section${i}Spaces" required></td>
-                    <td><input type="number" name="section${i}Entry" required></td>
-                    <td><input type="number" name="section${i}Exit" required></td>
+                    <td><input type="number" name="section${i}Spaces" required oninput="updateTotals()"></td>
+                    <td><input type="number" name="section${i}Entry" required oninput="updateTotals()"></td>
+                    <td><input type="number" name="section${i}Exit" required oninput="updateTotals()"></td>
                     <td>
-                        <select name="section${i}Cdisplay">
+                        <select name="section${i}Cdisplay" onchange="updateTotals()">
                             <option value="Yes">Yes</option>
                             <option value="No" selected>No</option>
                         </select>
@@ -96,6 +114,37 @@
             }
 
             sectionsContainer.appendChild(table);
+            updateTotals();  // Initialize totals
+        }
+
+        function updateTotals() {
+            let totalSpaces = 0;
+            let totalEntry = 0;
+            let totalExit = 0;
+            let totalCounters = 0;
+
+            document.querySelectorAll('input[name^="section"]').forEach(input => {
+                if (input.name.includes('Spaces') && input.value) {
+                    totalSpaces += parseInt(input.value);
+                }
+                if (input.name.includes('Entry') && input.value) {
+                    totalEntry += parseInt(input.value);
+                }
+                if (input.name.includes('Exit') && input.value) {
+                    totalExit += parseInt(input.value);
+                }
+            });
+
+            document.querySelectorAll('select[name^="section"]').forEach(select => {
+                if (select.name.includes('Cdisplay') && select.value === 'Yes') {
+                    totalCounters += 1;
+                }
+            });
+
+            document.getElementById('totalSpaces').textContent = totalSpaces;
+            document.getElementById('totalEntry').textContent = totalEntry;
+            document.getElementById('totalExit').textContent = totalExit;
+            document.getElementById('totalCounters').textContent = totalCounters;
         }
 
         function handleSubmit(event) {
