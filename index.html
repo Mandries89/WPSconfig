@@ -46,6 +46,10 @@
         h2 {
             margin-top: 30px;
         }
+
+        .section-header {
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
@@ -129,30 +133,32 @@
 
             <!-- Summary -->
             <h2 class="section-header">Summary</h2>
-            <table id="summaryTable">
-                <tr>
-                    <th>Total</th>
-                    <th>Entry</th>
-                    <th>Exit</th>
-                    <th>POF</th>
-                    <th>DOOR</th>
-                    <th>GATE</th>
-                    <th>Cashless</th>
-                    <th>SCANNER</th>
-                    <th>Counters</th>
-                </tr>
-                <tr>
-                    <td id="totalSpaces">0</td>
-                    <td id="totalEntry">0</td>
-                    <td id="totalExit">0</td>
-                    <td id="totalPOF">0</td>
-                    <td id="totalDOOR">0</td>
-                    <td id="totalGATE">0</td>
-                    <td id="totalCashless">0</td>
-                    <td id="totalSCANNER">0</td>
-                    <td id="totalCounters">0</td>
-                </tr>
-            </table>
+            <div class="form-container">
+                <table id="summaryTable">
+                    <tr>
+                        <th>Total</th>
+                        <th>Entry</th>
+                        <th>Exit</th>
+                        <th>POF</th>
+                        <th>DOOR</th>
+                        <th>GATE</th>
+                        <th>Cashless</th>
+                        <th>SCANNER</th>
+                        <th>Counters</th>
+                    </tr>
+                    <tr>
+                        <td id="totalSpaces">0</td>
+                        <td id="totalEntry">0</td>
+                        <td id="totalExit">0</td>
+                        <td id="totalPOF">0</td>
+                        <td id="totalDOOR">0</td>
+                        <td id="totalGATE">0</td>
+                        <td id="totalCashless">0</td>
+                        <td id="totalSCANNER">0</td>
+                        <td id="totalCounters">0</td>
+                    </tr>
+                </table>
+            </div>
 
             <h2 class="section-header">Station Configuration by Section</h2>
             <div id="stationsContainer"></div>
