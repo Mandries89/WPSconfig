@@ -205,11 +205,11 @@
             `;
             table.appendChild(headerRow);
 
-            stationInputs.forEach((input, index) => {
+            stationInputs.forEach((input) => {
                 const stationName = input.name.replace('Name', '');
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${stationName}</td>
+                    <td>${stationName.replace(/([a-z])([A-Z])/g, '$1 $2')}</td>
                     <td><input type="text" name="${stationName}IP" required></td>
                     <td><input type="text" name="${stationName}Subnetmask" required></td>
                     <td><input type="text" name="${stationName}DNS1" required></td>
