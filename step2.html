@@ -10,8 +10,8 @@
     <div class="container">
         <header>
             <div class="header-left">
-                <div class="info-box">In te vullen door de klant</div>
-                <div class="info-box">In te vullen door WPS</div>
+                <div class="info-box">De parking zal steeds werken met 2 secties, 1  binnen en 1 buiten</div>
+                <div class="info-box">...</div>
             </div>
             <div class="header-center">
                 <img src="logo.png" alt="WPS Logo" class="logo">
@@ -46,13 +46,9 @@
             <!-- Placeholder voor secties -->
             <div id="sectionsContainer"></div>
 
-            <input type="submit" value="Submit">
-        </form>
-        <button onclick="goBack()">Back</button>
-        
-        <!-- Total Overview -->
-        <div id="totalsContainer">
-            <table>
+            <!-- Sums -->
+            <h2>Summary</h2>
+            <table id="summaryTable">
                 <tr>
                     <th>Total</th>
                     <th>Entry</th>
@@ -66,7 +62,10 @@
                     <td id="totalCounters">0</td>
                 </tr>
             </table>
-        </div>
+
+            <input type="submit" value="Submit">
+        </form>
+        <button class="back-button" onclick="goBack()">Back</button>
     </div>
 
     <script>
@@ -99,11 +98,11 @@
                 row.innerHTML = `
                     <td>Section ${i}</td>
                     <td><input type="text" name="section${i}Name" value="in te vullen indien meerdere secties" required></td>
-                    <td><input type="number" name="section${i}Spaces" required oninput="updateTotals()"></td>
-                    <td><input type="number" name="section${i}Entry" required oninput="updateTotals()"></td>
-                    <td><input type="number" name="section${i}Exit" required oninput="updateTotals()"></td>
+                    <td><input type="number" name="section${i}Spaces" required oninput="calculateSums()"></td>
+                    <td><input type="number" name="section${i}Entry" required oninput="calculateSums()"></td>
+                    <td><input type="number" name="section${i}Exit" required oninput="calculateSums()"></td>
                     <td>
-                        <select name="section${i}Cdisplay" onchange="updateTotals()">
+                        <select name="section${i}Cdisplay" onchange="calculateSums()">
                             <option value="Yes">Yes</option>
                             <option value="No" selected>No</option>
                         </select>
@@ -114,37 +113,40 @@
             }
 
             sectionsContainer.appendChild(table);
-            updateTotals();  // Initialize totals
+            calculateSums();
         }
 
-        function updateTotals() {
+        function calculateSums() {
+            const numSections = document.getElementById('numSections').value;
             let totalSpaces = 0;
             let totalEntry = 0;
             let totalExit = 0;
             let totalCounters = 0;
 
-            document.querySelectorAll('input[name^="section"]').forEach(input => {
-                if (input.name.includes('Spaces') && input.value) {
-                    totalSpaces += parseInt(input.value);
-                }
-                if (input.name.includes('Entry') && input.value) {
-                    totalEntry += parseInt(input.value);
-                }
-                if (input.name.includes('Exit') && input.value) {
-                    totalExit += parseInt(input.value);
-                }
-            });
+            for (let i = 1; i <= numSections; i++) {
+                const spaces = parseInt(document.querySelector(`input[name="section${i}Spaces"]`)?.value || 0);
+                const entry = parseInt(document.querySelector(`input[name="section${i}Entry"]`)?.value || 0);
+                const exit = parseInt(document.querySelector(`input[name="section${i}Exit"]`)?.value || 0);
+                const cdisplay = document.querySelector(`select[name="section${i}Cdisplay"]`)?.value || 'No';
 
-            document.querySelectorAll('select[name^="section"]').forEach(select => {
-                if (select.name.includes('Cdisplay') && select.value === 'Yes') {
-                    totalCounters += 1;
+                totalSpaces += spaces;
+                totalEntry += entry;
+                totalExit += exit;
+                if (cdisplay === 'Yes') {
+                    totalCounters++;
                 }
-            });
+            }
 
-            document.getElementById('totalSpaces').textContent = totalSpaces;
-            document.getElementById('totalEntry').textContent = totalEntry;
-            document.getElementById('totalExit').textContent = totalExit;
-            document.getElementById('totalCounters').textContent = totalCounters;
+            document.getElementById('totalSpaces').innerText = totalSpaces;
+            document.getElementById('totalEntry').innerText = totalEntry;
+            document.getElementById('totalExit').innerText = totalExit;
+            document.getElementById('totalCounters').innerText = totalCounters;
+
+            // Save sums to sessionStorage for use on page 4
+            sessionStorage.setItem('totalSpaces', totalSpaces);
+            sessionStorage.setItem('totalEntry', totalEntry);
+            sessionStorage.setItem('totalExit', totalExit);
+            sessionStorage.setItem('totalCounters', totalCounters);
         }
 
         function handleSubmit(event) {
