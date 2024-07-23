@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Configuration Form - Step 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <div class="info-box">In te vullen door de klant</div>
+                <div class="info-box">...</div>
+            </div>
+            <div class="header-center">
+                <img src="logo.png" alt="WPS Logo" class="logo">
+            </div>
+            <div class="header-right"></div>
+        </header>
+
+        <form id="step1Form" name="configFormStep1" method="POST" data-netlify="true" onsubmit="goToStep2(event)">
+            <input type="hidden" name="form-name" value="configFormStep1">
+            <div class="form-group">
+                <label for="projectName">Project name</label>
+                <input type="text" id="projectName" name="projectName" value='Parking "Naam parking"' required>
+            </div>
+            <div class="form-group">
+                <label for="street">Street</label>
+                <input type="text" id="street" name="street">
+            </div>
+            <div class="form-group">
+                <label for="postalCode">Postal code</label>
+                <input type="text" id="postalCode" name="postalCode">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city">
+            </div>
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country">
+            </div>
+
+            <div class="form-group">
+                <label for="customerProjectLeader">Customer Project Leader</label>
+                <input type="text" id="customerProjectLeader" name="customerProjectLeader">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone">
+            </div>
+
+            <div class="form-group">
+                <label for="wpsProjectLeader">WPS Project Leader</label>
+                <input type="text" id="wpsProjectLeader" name="wpsProjectLeader">
+            </div>
+            <div class="form-group">
+                <label for="wpsSalesManager">WPS Sales Manager</label>
+                <input type="text" id="wpsSalesManager" name="wpsSalesManager">
+            </div>
+            <div class="form-group">
+                <label for="installationDate">Expected installation date</label>
+                <input type="date" id="installationDate" name="installationDate">
+            </div>
+
+            <input type="submit" value="Next">
+        </form>
+    </div>
+
+    <script>
+        async function goToStep2(event) {
+            event.preventDefault();
+            // Save the form data to sessionStorage
+            const formData = new FormData(event.target);
+            for (let [key, value] of formData.entries()) {
+                sessionStorage.setItem(key, value);
+            }
+
+            // Send the form data using Fetch API
+            const response = await fetch(event.target.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(formData).toString(),
+            });
+
+            if (response.ok) {
+                // Redirect to the second page
+                window.location.href = "step2.html";
+            } else {
+                alert('Failed to submit the form');
+            }
+        }
+    </script>
+</body>
+</html>
