@@ -78,6 +78,12 @@
         function generateStationsBySection() {
             const totalEntry = parseInt(sessionStorage.getItem('totalEntry'));
             const totalExit = parseInt(sessionStorage.getItem('totalExit'));
+            const totalPOF = parseInt(sessionStorage.getItem('totalPOF'));
+            const totalDOOR = parseInt(sessionStorage.getItem('totalDOOR'));
+            const totalGATE = parseInt(sessionStorage.getItem('totalGATE'));
+            const totalCashless = parseInt(sessionStorage.getItem('totalCashless'));
+            const totalSCANNER = parseInt(sessionStorage.getItem('totalSCANNER'));
+
             const stationsContainer = document.getElementById('stationsContainer');
             stationsContainer.innerHTML = '';  // Clear previous stations
 
@@ -88,11 +94,11 @@
                 return;
             }
 
-            const createTableForSection = (sectionIndex) => {
+            const createTableForStation = (sectionIndex, stationType, count) => {
                 const table = document.createElement('table');
                 const headerRow = document.createElement('tr');
                 headerRow.innerHTML = `
-                    <th>Station</th>
+                    <th>${stationType}</th>
                     <th>Name</th>
                     <th>Section</th>
                     <th>ANPR</th>
@@ -104,47 +110,44 @@
                 `;
                 table.appendChild(headerRow);
 
-                const entryCount = totalEntry / numSections;
-                const exitCount = totalExit / numSections;
-
-                for (let i = 1; i <= entryCount; i++) {
+                for (let i = 1; i <= count; i++) {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td>Entry ${i}</td>
-                        <td><input type="text" name="section${sectionIndex}Entry${i}Name" required></td>
-                        <td><input type="text" name="section${sectionIndex}Entry${i}Section" value="carpark${sectionIndex}" required></td>
+                        <td>${stationType} ${i}</td>
+                        <td><input type="text" name="section${sectionIndex}${stationType}${i}Name" required></td>
+                        <td><input type="text" name="section${sectionIndex}${stationType}${i}Section" value="carpark${sectionIndex}" required></td>
                         <td>
-                            <select name="section${sectionIndex}Entry${i}ANPR">
+                            <select name="section${sectionIndex}${stationType}${i}ANPR">
                                 <option value="Yes">Yes</option>
                                 <option value="No" selected>No</option>
                             </select>
                         </td>
                         <td>
-                            <select name="section${sectionIndex}Entry${i}AudioSupport">
+                            <select name="section${sectionIndex}${stationType}${i}AudioSupport">
                                 <option value="Yes">Yes</option>
                                 <option value="No" selected>No</option>
                             </select>
                         </td>
                         <td>
-                            <select name="section${sectionIndex}Entry${i}TicketPrinter">
+                            <select name="section${sectionIndex}${stationType}${i}TicketPrinter">
                                 <option value="Yes">Yes</option>
                                 <option value="No" selected>No</option>
                             </select>
                         </td>
                         <td>
-                            <select name="section${sectionIndex}Entry${i}CreditCardIn">
+                            <select name="section${sectionIndex}${stationType}${i}CreditCardIn">
                                 <option value="Yes">Yes</option>
                                 <option value="No" selected>No</option>
                             </select>
                         </td>
                         <td>
-                            <select name="section${sectionIndex}Entry${i}BancontactCC">
+                            <select name="section${sectionIndex}${stationType}${i}BancontactCC">
                                 <option value="Yes">Yes</option>
                                 <option value="No" selected>No</option>
                             </select>
                         </td>
                         <td>
-                            <select name="section${sectionIndex}Entry${i}Cash">
+                            <select name="section${sectionIndex}${stationType}${i}Cash">
                                 <option value="Yes">Yes</option>
                                 <option value="No" selected>No</option>
                             </select>
@@ -152,63 +155,31 @@
                     `;
                     table.appendChild(row);
                 }
-
-                for (let i = 1; i <= exitCount; i++) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>Exit ${i}</td>
-                        <td><input type="text" name="section${sectionIndex}Exit${i}Name" required></td>
-                        <td><input type="text" name="section${sectionIndex}Exit${i}Section" value="carpark${sectionIndex}" required></td>
-                        <td>
-                            <select name="section${sectionIndex}Exit${i}ANPR">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}Exit${i}AudioSupport">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}Exit${i}TicketPrinter">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}Exit${i}CreditCardIn">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}Exit${i}BancontactCC">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select name="section${sectionIndex}Exit${i}Cash">
-                                <option value="Yes">Yes</option>
-                                <option value="No" selected>No</option>
-                            </select>
-                        </td>
-                    `;
-                    table.appendChild(row);
-                }
-
-                // Additional stations (POF, etc.) can be added similarly
 
                 return table;
             };
+
+            const stationTypes = [
+                { type: 'Entry', count: totalEntry },
+                { type: 'Exit', count: totalExit },
+                { type: 'POF', count: totalPOF },
+                { type: 'DOOR', count: totalDOOR },
+                { type: 'GATE', count: totalGATE },
+                { type: 'Cashless', count: totalCashless },
+                { type: 'SCANNER', count: totalSCANNER }
+            ];
 
             for (let i = 1; i <= numSections; i++) {
                 const sectionHeader = document.createElement('h3');
                 sectionHeader.innerText = `Section ${i}`;
                 stationsContainer.appendChild(sectionHeader);
-                stationsContainer.appendChild(createTableForSection(i));
+
+                stationTypes.forEach(station => {
+                    if (station.count > 0) {
+                        const table = createTableForStation(i, station.type, station.count);
+                        stationsContainer.appendChild(table);
+                    }
+                });
             }
         }
 
