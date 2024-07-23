@@ -18,7 +18,7 @@
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centering the logo */
     align-items: center;
     margin-bottom: 20px;
 }
@@ -54,4 +54,18 @@ h2 {
 .section-container {
     margin-bottom: 30px;
     text-align: center;
+}
+
+button, input[type="submit"] {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: darkgreen;
 }
