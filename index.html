@@ -11,7 +11,7 @@
         <header>
             <div class="header-left">
                 <div class="info-box">In te vullen door de klant</div>
-                <div class="info-box">In te vullen door WPS</div>
+                <div class="info-box">...</div>
             </div>
             <div class="header-center">
                 <img src="logo.png" alt="WPS Logo" class="logo">
@@ -78,15 +78,29 @@
     </div>
 
     <script>
-        function goToStep2(event) {
+        async function goToStep2(event) {
             event.preventDefault();
             // Save the form data to sessionStorage
             const formData = new FormData(event.target);
             for (let [key, value] of formData.entries()) {
                 sessionStorage.setItem(key, value);
             }
-            // Redirect to the second page
-            window.location.href = "step2.html";
+
+            // Send the form data using Fetch API
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(formData).toString(),
+            });
+
+            if (response.ok) {
+                // Redirect to the second page
+                window.location.href = "step2.html";
+            } else {
+                alert('Failed to submit the form');
+            }
         }
     </script>
 </body>
