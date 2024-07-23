@@ -198,7 +198,6 @@
             const headerRow = document.createElement('tr');
             headerRow.innerHTML = `
                 <th>Station</th>
-                <th>Name</th>
                 <th>IP adres</th>
                 <th>Subnetmask</th>
                 <th>DNS 1</th>
@@ -210,7 +209,6 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${input.name.split(/(?=[A-Z])/).join(' ')}</td>
-                    <td>${input.value}</td>
                     <td><input type="text" name="station${index + 1}IP" required></td>
                     <td><input type="text" name="station${index + 1}Subnetmask" required></td>
                     <td><input type="text" name="station${index + 1}DNS1" required></td>
