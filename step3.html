@@ -51,8 +51,31 @@
         <h2>IP Settings per Station</h2>
         <div id="ipSettingsContainer"></div>
 
-        <form id="step3Form" name="configFormStep3" method="POST" data-netlify="true" onsubmit="handleSubmit(event)">
+        <form id="step3Form" name="configFormStep3" method="POST" action="/" data-netlify="true" onsubmit="handleSubmit(event)">
             <input type="hidden" name="form-name" value="configFormStep3">
+            
+            <!-- Other hidden inputs to carry over data from previous steps -->
+            <input type="hidden" name="projectName" value="">
+            <input type="hidden" name="address" value="">
+            <input type="hidden" name="street" value="">
+            <input type="hidden" name="postalCode" value="">
+            <input type="hidden" name="city" value="">
+            <input type="hidden" name="country" value="">
+            <input type="hidden" name="customerProjectLeader" value="">
+            <input type="hidden" name="email" value="">
+            <input type="hidden" name="phone" value="">
+            <input type="hidden" name="wpsProjectLeader" value="">
+            <input type="hidden" name="wpsSalesManager" value="">
+            <input type="hidden" name="installationDate" value="">
+            <input type="hidden" name="totalSpaces" value="">
+            <input type="hidden" name="totalEntry" value="">
+            <input type="hidden" name="totalExit" value="">
+            <input type="hidden" name="totalPOF" value="">
+            <input type="hidden" name="totalDOOR" value="">
+            <input type="hidden" name="totalGATE" value="">
+            <input type="hidden" name="totalCashless" value="">
+            <input type="hidden" name="totalSCANNER" value="">
+            <input type="hidden" name="totalCounters" value="">
 
             <!-- Other form fields for Step 3 -->
             <!-- Placeholder for additional fields -->
@@ -74,6 +97,10 @@
             document.getElementById('totalCashless').innerText = sessionStorage.getItem('totalCashless');
             document.getElementById('totalSCANNER').innerText = sessionStorage.getItem('totalSCANNER');
             document.getElementById('totalCounters').innerText = sessionStorage.getItem('totalCounters');
+
+            document.querySelectorAll('input[type="hidden"]').forEach(input => {
+                input.value = sessionStorage.getItem(input.name);
+            });
 
             generateStationsBySection();
         });
@@ -262,7 +289,7 @@
 
             if (response.ok) {
                 // Redirect to the next page
-                window.location.href = "/thank-you.html";
+                window.location.href = "thank-you.html";
             } else {
                 alert('Failed to submit the form');
             }
